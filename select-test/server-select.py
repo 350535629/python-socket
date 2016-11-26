@@ -6,7 +6,7 @@ server=('10.21.17.56',9898)
 sock=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
 sock.setblocking(False)    
 sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)  
-sock.bind(server)  
+sock.bind(server)
 sock.listen(5)  
    
 rlists=[sock]  
@@ -21,7 +21,7 @@ while True:
     if not(rs or ws or es):  
         print 'timeout...' 
         continue 
-        
+
     for s in rs:  
         if s is sock:  
             conn,addr=s.accept()  
@@ -32,7 +32,9 @@ while True:
         else:  
             data =s.recv(1024)  
             if data:  
-                print data  
+                print data
+                k='h'+data
+                conn.sendall(k)
                 msg_que[s].put(data)  
                 if s not in wlists:  
                     wlists.append(s)  
